@@ -1,7 +1,6 @@
 package com.example.security.config;
 
 import com.example.security.models.Customer;
-import com.example.security.models.SecurityCustomer;
 import com.example.security.repo.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +21,6 @@ public class CustomerUserDetailsService implements UserDetailsService {
         if (customer.size() == 0) {
             throw new UsernameNotFoundException("User details not found for the user : " + username);
         }
-        return new SecurityCustomer(customer.get(0));
+        return new CustomerUserDetails(customer.get(0));
     }
 }

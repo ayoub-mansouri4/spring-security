@@ -1,5 +1,6 @@
-package com.example.security.models;
+package com.example.security.config;
 
+import com.example.security.models.Customer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.*;
 
-public class SecurityCustomer implements UserDetails {
+public class CustomerUserDetails implements UserDetails {
 
     /**
      *
@@ -16,7 +17,7 @@ public class SecurityCustomer implements UserDetails {
 
     private final Customer customer;
 
-    public SecurityCustomer(Customer customer) {
+    public CustomerUserDetails(Customer customer) {
         this.customer = customer;
     }
 
