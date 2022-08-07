@@ -91,6 +91,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * auth.userDetailsService(userDetailsService); }
      */
 
+
+
+    /**
+     * to Use JdbcUserDetailsManager
+     */
     /*
      * @Bean public UserDetailsService userDetailsService(DataSource dataSource) {
      * return new JdbcUserDetailsManager(dataSource); }
