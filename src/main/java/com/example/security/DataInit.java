@@ -27,7 +27,7 @@ public class DataInit implements CommandLineRunner {
         authorityRepo.save(authority);
         */
 
-        customerRepo.save(new Customer("ayoub@gmail.com","1234","admin"));
+        customerRepo.save(new Customer("ayoub@gmail.com","$2a$12$9J2507YYeqajlRlwWQf85e.LAshdjXfQs/Ld4JkumLI/LngkagOJu","admin"));
 
     }
 }
