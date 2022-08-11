@@ -15,6 +15,7 @@ public class NewAuthenticationProvider implements AuthenticationProvider {
     private PasswordEncoder passwordEncoder;
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        String username = authentication.getName();
         return null;
     }
 
