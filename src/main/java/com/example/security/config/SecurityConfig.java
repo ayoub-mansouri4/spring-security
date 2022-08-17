@@ -38,9 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         config.setMaxAge(3600L);
                         return config;
                     }
-                    //csrf should not be applied on contact
+                    //csrf should not be applied on contact && apply some authorities
                 }).and().csrf().ignoringAntMatchers("/contact").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().
-                authorizeRequests().antMatchers("/myAccount").authenticated().antMatchers("/myBalance").authenticated()
+                authorizeRequests().antMatchers("/myAccount").hasAuthority("READ").antMatchers("/myBalance").authenticated()
                 .antMatchers("/myLoans").authenticated().antMatchers("/myCards").authenticated()
                 .antMatchers("/user").authenticated().antMatchers("/notices").permitAll()
                 .antMatchers("/contact").permitAll().and().httpBasic();
