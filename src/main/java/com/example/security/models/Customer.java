@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -17,11 +18,7 @@ public class Customer {
     private Long id;
     private String email;
     private String password;
-    private String role;
+    @OneToMany(mappedBy = "customer")
+    List<Authority> authorities;
 
-    public Customer(String email, String password, String role) {
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
 }

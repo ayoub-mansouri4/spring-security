@@ -19,8 +19,8 @@ public class Authority {
     private String authority;
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "id_user")
-    User user;
+    @JoinColumn(name = "id_customer")
+    Customer customer;
 
     public Authority(String authority) {
         this.authority = authority;
