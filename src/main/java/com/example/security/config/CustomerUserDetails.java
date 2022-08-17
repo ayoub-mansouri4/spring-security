@@ -22,17 +22,12 @@ public class CustomerUserDetails implements UserDetails {
         this.customer = customer;
     }
 
-    private List<GrantedAuthority> getAuthorities(Set<Authority> authorities) {
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        for (Authority authority : authorities) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName()));
-        }
-        return grantedAuthorities;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for(Authority authority : customer.getAuthorities())
+        authorities.add(new SimpleGrantedAuthority(authority.getName()));
+        return authorities;
     }
 
     @Override
