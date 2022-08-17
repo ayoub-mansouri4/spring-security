@@ -11,8 +11,5 @@ public class MyController {
     public String welcome(){
         return "welcome Ayoub";
     }
-    @PostMapping("/user")
-    public String getUser(@RequestBody User user){
-        return user.toString();
-    }
+
 }

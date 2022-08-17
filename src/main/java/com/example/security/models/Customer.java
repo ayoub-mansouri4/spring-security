@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "customers")
@@ -19,6 +20,6 @@ public class Customer {
     private String email;
     private String password;
     @OneToMany(mappedBy = "customer")
-    List<Authority> authorities;
+    Set<Authority> authorities;
 
 }

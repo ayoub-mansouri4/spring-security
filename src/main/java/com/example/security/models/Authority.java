@@ -16,13 +16,10 @@ public class Authority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String authority;
+    private String name;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_customer")
     Customer customer;
 
-    public Authority(String authority) {
-        this.authority = authority;
-    }
 }
