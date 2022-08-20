@@ -1,5 +1,8 @@
 package com.example.security.config;
 
+import com.example.security.filter.AuthoritiesLoggingAfterFilter;
+import com.example.security.filter.AuthoritiesLoggingAtFilter;
+import com.example.security.filter.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,6 +19,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -38,10 +42,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         config.setMaxAge(3600L);
                         return config;
                     }
-                }).and().csrf().ignoringAntMatchers("/contact").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().
-                authorizeRequests().antMatchers("/myAccount").authenticated().antMatchers("/myBalance").authenticated()
-                .antMatchers("/myLoans").authenticated().antMatchers("/myCards").authenticated()
-                .antMatchers("/user").authenticated().antMatchers("/notices").permitAll()
+                }).and().csrf().ignoringAntMatchers("/contact").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and().addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
+                .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
+                .authorizeRequests()
+                .antMatchers("/myAccount").hasRole("USER")
+                .antMatchers("/myBalance").hasAnyRole("USER","ADMIN")
+                .antMatchers("/myLoans").hasRole("ROOT")
+                .antMatchers("/myCards").hasAnyRole("USER","ADMIN")
+                .antMatchers("/user").authenticated()
+                .antMatchers("/notices").permitAll()
                 .antMatchers("/contact").permitAll().and().httpBasic();
     }
 
