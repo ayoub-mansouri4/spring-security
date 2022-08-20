@@ -43,8 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         return config;
                     }
                 }).and().csrf().ignoringAntMatchers("/contact").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+               //new RequestValidationBeforeFilter() before BasicAuthenticationFilter
                 .and().addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+                //new RequestValidationBeforeFilter() after BasicAuthenticationFilter
                 .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
+                //new RequestValidationBeforeFilter() At BasicAuthenticationFilter
                 .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/myAccount").hasRole("USER")
