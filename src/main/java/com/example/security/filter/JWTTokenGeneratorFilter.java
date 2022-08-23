@@ -32,11 +32,15 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
 			throws IOException, ServletException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (null != authentication) {
+			//secret word
 			SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes(StandardCharsets.UTF_8));
-			String jwt = Jwts.builder().setIssuer("Eazy Bank").setSubject("JWT Token")
+			//setIssuer ==> émetteur
+			String jwt = Jwts.builder().setIssuer("Ayoub").setSubject("JWT Token")
+					//claims are values of payload
 						.claim("username", authentication.getName())
 					  .claim("authorities", populateAuthorities(authentication.getAuthorities()))
 					  .setIssuedAt(new Date())
+					//Expiration in ms
 					.setExpiration(new Date((new Date()).getTime() + 3000000000L))
 					.signWith(key).compact();
 			response.setHeader(SecurityConstants.JWT_HEADER, jwt);
@@ -45,6 +49,9 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
 		chain.doFilter(request, response);
 	}
 
+
+	//this filter will be executed only if request.getServletPath().equals("/user")
+	//==> this filter should not be applied for the login request
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
 		return !request.getServletPath().equals("/user");
